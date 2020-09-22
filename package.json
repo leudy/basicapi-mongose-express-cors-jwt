@@ -1,0 +1,16 @@
+{
+  "name": "basicbackendwithmongose",
+  "version": "1.0.0",
+  "description": "this is a generic backend with minimal functionallity",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": ""
+  },
+  "author": "Leudi Rosario",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
