@@ -7,6 +7,7 @@ const RegisterFields =
     check('email', 'el email es obligatorio').not().isEmpty(),
     check('password', 'la contraseña es obligatoria').not().isEmpty()
         , check('password', 'la contraseña debe de tener un minimo de 6 digito').not().isEmpty().isLength({ min: 6 })]
+
 const LoginFields =
     [
         check('email', 'el email es obligatorio').not().isEmpty(),

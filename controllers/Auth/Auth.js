@@ -1,6 +1,7 @@
-const { response } = require('express')
+const { response, json } = require('express')
 const bccrypt = require('bcryptjs')
 const { validationResult } = require('express-validator')
+const jsonwebtoken = require('../../helpers/jwt')
 const UserContext = require('../../models/user')
 const { findOne } = require('../../models/user')
 
@@ -31,8 +32,8 @@ const registerHandler = async (req, res = response) => {
         console.log(user.password)
         const new_user = new UserContext(user);
         await new_user.save();
-
-        res.status(200).json({ ok: true, msg: 'register  is succefull' })
+        let token = await jsonwebtoken.generarJwt(user._id, user.name)
+        res.status(200).json({ ok: true, name: new_user.name, uid: new_user._id, token })
     } catch (error) {
         res.status(500).json({ ok: false, msg: 'Error al intentar crear una cuenta de usuario, puede ser que el correo ya este en uso' })
     }
@@ -48,8 +49,10 @@ const loginHandler = async (req, res = response) => {
             return res.status(400).json({ ok: false, msg: 'Este usuario no existe' })
         }
         const isValid = bccrypt.compareSync(password, user.password);
-        if (isValid)
-            return res.status(200).json({ ok: true, uuid: user._id, name: user.name })
+        if (isValid) {
+            let token = await jsonwebtoken.generarJwt(user._id, user.name)
+            return res.status(200).json({ ok: true, uuid: user._id, name: user.name, token })
+        }
         else
             return res.status(400).json({ ok: false, msg: 'Errro de credenciales' })
 
@@ -63,8 +66,10 @@ const loginHandler = async (req, res = response) => {
 }
 
 //TODO: regnew
-const renewHandler = (req, res = response) => {
-    res.json({ ok: true, msg: 'renew is succefull' })
+const renewHandler = async (req, res = response) => {
+    const { uid, name } = req;
+    let token = await jsonwebtoken.generarJwt(uid, name)
+    res.json({ ok: true, msg: 'renew is succefull', uid, name, new_token: token })
 }
 
 module.exports = { registerHandler, loginHandler, renewHandler }
