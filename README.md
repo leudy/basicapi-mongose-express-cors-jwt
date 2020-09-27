@@ -40,6 +40,7 @@ Body
 [DELETE]()
 ```
 /api/events/5f710cd464d472a3b084dff0
-
 ```
+
+
 
