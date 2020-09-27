@@ -21,6 +21,7 @@ const EncryptPasswordAsync = async (password) => {
 }
 
 const registerHandler = async (req, res = response) => {
+    //TODO: agregar validador de token, no esta agregado el id en el registro
     try {
         let user = req.body;
         const email = user.email;
@@ -29,7 +30,6 @@ const registerHandler = async (req, res = response) => {
             return res.status(400).json({ ok: false, msg: 'Ya existe un cuenta con este correo' })
         }
         user.password = await EncryptPasswordAsync(user.password);
-        console.log(user.password)
         const new_user = new UserContext(user);
         await new_user.save();
         let token = await jsonwebtoken.generarJwt(user._id, user.name)

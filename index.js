@@ -13,7 +13,7 @@ app.use(express.json())
 //rutas
 // auth
 app.use('/api/auth', require('./routes/Auth'))
-
+app.use('/api/events', require('./routes/Events'))
 app.use('/api/products', (req, resp) => {
     resp.json({ ok: true, msg: 'ruta de producto en construction' })
 })

@@ -1,5 +1,5 @@
 const StringType = {
-    type: String, require: true
+    type: String, required: true
 };
 
 
