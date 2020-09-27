@@ -8,7 +8,7 @@ const { dbconnect } = require('./database/config')
 const app = express();
 dbconnect()
 app.use(cors())
-app.use(express.static('/public'));
+app.use(express.static(__dirname + '/public/'));
 app.use(express.json())
 //rutas
 // auth
